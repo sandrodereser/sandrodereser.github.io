@@ -125,7 +125,7 @@
 
         .inside-image-container { /* Container for the image on the inside */
             width: 90%;
-            max-width: 400px; /* Adjusted max-width for inside image */
+            max-width: 100%; /* Adjusted max-width for responsiveness */
             border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -133,6 +133,7 @@
             margin-bottom: 1rem; /* Added margin bottom */
             background-color: #f0f4f8; /* Light background */
              align-self: center; /* Center the image container */
+             box-sizing: border-box; /* Include padding/border in width */
         }
 
         .inside-image { /* Styling for the image element on the inside */
