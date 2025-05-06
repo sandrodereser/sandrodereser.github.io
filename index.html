@@ -23,7 +23,8 @@
         .card-container {
             width: 720px; /* Enlarged width */
             max-width: 100%; /* Ensure it doesn't exceed screen width on mobile */
-            height: 1040px; /* Enlarged height */
+            min-height: 100vh; /* Ensure card is at least viewport height */
+            height: auto; /* Allow height to adjust based on content */
             position: relative;
             cursor: pointer;
             border-radius: 1rem;
@@ -126,6 +127,7 @@
         .inside-image-container { /* Container for the image on the inside */
             width: 90%;
             max-width: 100%; /* Adjusted max-width for responsiveness */
+            height: auto; /* Allow height to adjust */
             border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
