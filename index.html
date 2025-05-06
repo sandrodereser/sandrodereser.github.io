@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alles Gute zum Geburtstag!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right top, #fbc2eb, #a6c1ee); /* Original body background */
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .card-container {
+            width: 720px; /* Enlarged width */
+            height: 1040px; /* Enlarged height */
+            position: relative;
+            cursor: pointer;
+            border-radius: 1rem;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
+            border-radius: 1rem;
+        }
+
+        .card.open {
+            transform: rotateY(-180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-front {
+            background: linear-gradient(160deg, #a8d8ea 0%, #d6eef5 100%); /* Softer sky blue gradient */
+            color: #2c5234; /* Deep forest green text */
+            z-index: 2;
+            justify-content: space-around;
+        }
+
+        .card-inside {
+            background: linear-gradient(135deg, #E6F5C9 0%, #D1E8E2 100%);
+            color: #333;
+            transform: rotateY(180deg);
+            z-index: 1;
+            justify-content: flex-start;
+            overflow-y: auto;
+            padding-top: 40px; /* Added padding to the top for content */
+            padding-bottom: 20px; /* Added padding to the bottom */
+             text-align: left; /* Align inside text to the left for readability */
+             align-items: flex-start; /* Align items to the start */
+        }
+
+        .birthday-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            line-height: 1.2;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+        }
+
+        .large-birthday-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem; /* Increased font size */
+            line-height: 1.2;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            color: #2d6a4f; /* Slightly different color for prominence */
+            margin-top: 1rem; /* Added margin */
+            margin-bottom: 1rem; /* Added margin */
+        }
+
+
+        .birthday-text-inside {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.0rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: #2d6a4f;
+             text-align: center; /* Center the inside birthday text */
+             width: 100%; /* Ensure centering works */
+        }
+
+        .front-image-container { /* Container for the image on the front */
+            width: 90%;
+            max-width: 500px; /* Increased max-width further */
+            height: auto; /* Adjusted height to auto */
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(44, 82, 52, 0.2); /* Shadow themed with text color */
+            margin-top: 1rem;
+            background-color: #f0f4f8; /* Light background */
+        }
+
+        .front-image { /* Styling for the image element on the front */
+            display: block;
+            width: 100%;
+            height: auto; /* Adjusted height to auto */
+            object-fit: cover; /* This will make the image cover the container while maintaining aspect ratio */
+        }
+
+        .inside-image-container { /* Container for the image on the inside */
+            width: 90%;
+            max-width: 400px; /* Adjusted max-width for inside image */
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 1.5rem; /* Added margin top */
+            margin-bottom: 1rem; /* Added margin bottom */
+            background-color: #f0f4f8; /* Light background */
+             align-self: center; /* Center the image container */
+        }
+
+        .inside-image { /* Styling for the image element on the inside */
+             display: block;
+            width: 100%;
+            height: auto; /* Auto height to maintain aspect ratio */
+            object-fit: cover;
+        }
+
+        .tour-data {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 0 20px; /* Add padding for alignment with hike box */
+             align-self: center; /* Center the tour data block */
+        }
+
+        .tour-data ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tour-data li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .message-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+            color: #3e6648; /* Slightly lighter green for subtext */
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+        }
+
+        .message-text-sm {
+            font-size: 0.875rem;
+            line-height: 1.5;
+             padding: 0 20px; /* Add padding for alignment */
+             width: 100%; /* Ensure padding is applied correctly */
+             box-sizing: border-box; /* Include padding in element's total width */
+        }
+
+        .click-instruction {
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+            color: #4a7c59; /* Greenish color for instruction */
+        }
+
+        /* Decorations */
+        .decoration {
+            position: absolute;
+            font-size: 2rem;
+        }
+
+        .deco-backpack {
+            top: 10px; left: 10px; font-size: 2.2rem; opacity:0.6; color: #4a7c59;
+            transform: rotate(-10deg);
+            animation: float-icon 6s ease-in-out infinite alternate;
+        }
+        .deco-compass-front {
+            bottom: 10px; right: 10px; font-size: 2.2rem; opacity:0.6; color: #4a7c59;
+            transform: rotate(10deg);
+            animation: float-icon-compass 5s ease-in-out infinite alternate 0.5s;
+        }
+
+        .deco-tree {
+            top: 10px; left: 10px; font-size: 1.8rem; opacity:0.7; color: #40916c;
+            animation: sway-tree 5s ease-in-out infinite alternate;
+        }
+        .deco-mountain {
+            top: 15px; right: 15px; font-size: 1.8rem; opacity:0.7; transform: rotate(5deg); color: #52796f;
+            animation: pulse-mountain 3s ease-in-out infinite;
+        }
+        .deco-cabin {
+            bottom: 8px; left: 15px; font-size: 1.7rem; opacity:0.7; color: #84a98c;
+            animation: shimmer-effect 4s ease-in-out infinite alternate;
+        }
+        .deco-stars {
+            bottom: 5px; right: 10px; font-size: 1.5rem; opacity:0.7; color: #cad2c5;
+            animation: shimmer-effect 3.5s ease-in-out infinite alternate 0.5s;
+        }
+
+        .qr-code-img {
+            border-radius: 0.375rem;
+            border: 2px solid #52796f;
+            background-color: white;
+            padding: 4px;
+        }
+
+        .hike-option-box {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #a3b18a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+             margin-left: 20px; /* Added margin left and right */
+            margin-right: 20px;
+             width: auto; /* Allow box to adjust width with margin */
+        }
+        .hike-text-content {
+            flex-grow: 1;
+        }
+
+        /* Animation Keyframes */
+        @keyframes sway-tree {
+            from { transform: rotate(-2deg); }
+            to { transform: rotate(2deg); }
+        }
+        @keyframes pulse-mountain {
+            0%, 100% { transform: scale(1) rotate(5deg); opacity: 0.7; }
+            50% { transform: scale(1.05) rotate(5deg); opacity: 0.85; }
+        }
+        @keyframes shimmer-effect {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+        @keyframes float-icon {
+            0% { transform: translateY(0px) rotate(-10deg); }
+            50% { transform: translateY(-5px) rotate(-10px); }
+            100% { transform: translateY(0px) rotate(-10px); }
+        }
+         @keyframes float-icon-compass {
+            0% { transform: translateY(0px) rotate(10deg); }
+            50% { transform: translateY(-5px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(10deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card-container" id="birthdayCardContainer">
+        <div class="card" id="birthdayCard">
+            <div class="card-face card-front">
+                <span class="decoration deco-backpack">🎒</span>
+                <span class="decoration deco-compass-front">🧭</span>
+
+                <div>
+                    <h1 class="birthday-text">Für Lori the adventure girl</h1>
+                    <p class="large-birthday-text">Happy Birthday!</p>
+                </div>
+
+                <div class="front-image-container">
+                    <img src="image_5c5366.jpg" alt="Bild für die Geburtstagskarte Vorderseite" class="front-image">
+                </div>
+
+                <div>
+                    <p class="message-text">Ein besonderes Geburtstagsabenteuer wartet auf dich!</p>
+                    <p class="click-instruction">(Klicken zum Öffnen)</p>
+                </div>
+            </div>
+            <div class="card-face card-inside">
+                <span class="decoration deco-tree">🌲</span>
+                <span class="decoration deco-mountain">⛰️</span>
+                <span class="decoration deco-cabin">🏡</span>
+                <span class="decoration deco-stars">✨</span>
+
+                <h2 class="birthday-text-inside mt-4">Herzlichen Glückwunsch zum Geburtstag!</h2>
+
+                <p class="message-text-sm px-3 text-gray-700 mb-3">
+                    Ich hoffe, du hast einen fantastischen Tag! Hier ist dein ganz besonderes Geschenk:
+                </p>
+
+                <div class="w-full px-2">
+                    <div class="hike-option-box">
+                        <a href="https://www.komoot.com/collection/3483995/-loris-30th-birthday-bash-hike" target="_blank" class="block shrink-0">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://www.komoot.com/collection/3483995/-loris-30th-birthday-bash-hike&bgcolor=FFFFFF&color=40916C&qzone=1&margin=3"
+                                 alt="QR für Loris Geburtstagwanderung"
+                                 class="qr-code-img"
+                                 onerror="this.src='https://placehold.co/90x90/E2E8F0/A0AEC0?text=QR+Fehler'; this.alt='Fehler beim Laden des QR';">
+                        </a>
+                        <div class="hike-text-content">
+                            <h3 class="font-semibold text-lg text-green-800">🏔️ Lori's Birthday Party</h3>
+                            <p class="text-xs text-gray-700 mt-1 leading-relaxed">
+                                Eine unvergessliche Wanderung zu deinem 30. Geburtstag! Wir erkunden das atemberaubende <strong>Appenzeller Land</strong> mit einer gemütlichen Übernachtung auf der <strong>Meglisalp</strong>.
+                                Die Route ist inspiriert von den schönsten Schweizer Wanderwegen!
+                            </p>
+                            <a href="https://www.komoot.com/collection/3483995/-loris-30th-birthday-bash-hike" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 hover:underline mt-2 inline-block font-medium">
+                                Details auf Komoot &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inside-image-container">
+                    <img src="image_663168.jpg" alt="Bild von Meglisalp und Umgebung" class="inside-image">
+                </div>
+
+                <div class="tour-data">
+                    <h4 class="font-semibold text-md text-green-800 mb-2">Tour Details:</h4>
+                    <ul>
+                        <li><strong>Aktivitäten:</strong> 2</li>
+                        <li><strong>Distanz:</strong> 32.2 km</li>
+                        <li><strong>Dauer:</strong> 15:23 h</li>
+                        <li><strong>Höhenmeter Aufstieg:</strong> 2,410 m</li>
+                    </ul>
+                </div>
+
+
+                <p class="message-text-sm mt-4 text-gray-600">Scanne den QR-code oder klicke auf "Details" zum Entdecken!</p>
+                <p class="message-text-sm mt-2 text-gray-700">Alles Liebe! ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the card element
+        const card = document.getElementById('birthdayCard');
+        // Get the card container
+        const cardContainer = document.getElementById('birthdayCardContainer');
+
+        // Add event listener for click to toggle the 'open' class
+        cardContainer.addEventListener('click', (event) => {
+            // Prevent card from flipping if a link, QR code image, or the image/svg container inside the card was clicked
+            if (event.target.closest('a') ||
+                event.target.closest('.qr-code-img') ||
+                event.target.closest('.front-image-container') || // Check for the container of the image on the front
+                event.target.closest('.inside-image-container')) { // Check for the container of the image on the inside
+
+                if (event.target.closest('a')) {
+                    return;
+                }
+                event.stopPropagation();
+                return;
+            }
+            card.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
