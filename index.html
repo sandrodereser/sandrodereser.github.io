@@ -14,12 +14,15 @@
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(to right top, #fbc2eb, #a6c1ee); /* Original body background */
-            overflow: hidden;
+            /* Removed overflow: hidden; to allow scrolling on mobile */
             perspective: 1000px;
+            padding: 20px; /* Add some padding for mobile view */
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
 
         .card-container {
             width: 720px; /* Enlarged width */
+            max-width: 100%; /* Ensure it doesn't exceed screen width on mobile */
             height: 1040px; /* Enlarged height */
             position: relative;
             cursor: pointer;
@@ -67,7 +70,7 @@
             transform: rotateY(180deg);
             z-index: 1;
             justify-content: flex-start;
-            overflow-y: auto;
+            overflow-y: auto; /* Ensure vertical scrolling is enabled */
             padding-top: 40px; /* Added padding to the top for content */
             padding-bottom: 20px; /* Added padding to the bottom */
              text-align: left; /* Align inside text to the left for readability */
